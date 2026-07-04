@@ -2,89 +2,87 @@
 import { site } from "../data/site";
 import ParticleMesh from "./ParticleMesh.astro";
 import Typewriter from "./Typewriter.astro";
+import { translations } from "../i18n/translations";
+
+const t = translations.en;
 ---
 
 <section
   id="hero"
   class="relative flex min-h-screen items-center justify-center overflow-hidden"
 >
-  <!-- Background layers -->
   <div class="absolute inset-0 bg-navy"></div>
   <div class="absolute inset-0 grid-pattern opacity-60"></div>
-
-  <!-- Radial glow behind mesh -->
   <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.12)_0%,transparent_70%)]"
+    class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]"
   ></div>
 
-  <!-- Particle mesh animation -->
-  <div class="absolute inset-0 opacity-80">
+  <!-- Particle mesh -->
+  <div class="absolute inset-0">
     <ParticleMesh />
   </div>
 
-  <!-- Gradient fade at bottom -->
-  <div
-    class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-navy to-transparent"
-  ></div>
+  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-navy to-transparent"></div>
 
-  <!-- Profile photo — bottom left, inspired by LinkedIn banner -->
-  <div
-    class="absolute bottom-8 left-4 z-10 sm:bottom-12 sm:left-8 md:bottom-16 md:left-12 lg:left-16"
-  >
-    <div class="relative">
+  <!-- Profile photo with animated gradient ring -->
+  <div class="absolute bottom-8 left-4 z-10 sm:bottom-12 sm:left-8 md:bottom-16 md:left-12 lg:left-16">
+    <div class="relative p-1">
       <div
-        class="absolute -inset-1 rounded-full bg-gradient-to-br from-primary to-secondary opacity-60 blur-sm"
+        class="profile-ring absolute inset-0 rounded-full bg-gradient-to-br from-primary via-secondary to-primary"
       ></div>
       <img
         src="/images/profile.png"
         alt={site.name}
         width="160"
         height="160"
-        class="relative h-24 w-24 rounded-full border-4 border-white object-cover shadow-2xl sm:h-32 sm:w-32 md:h-40 md:w-40"
+        class="relative h-24 w-24 rounded-full border-4 border-navy object-cover shadow-2xl sm:h-32 sm:w-32 md:h-40 md:w-40"
         loading="eager"
       />
     </div>
   </div>
 
-  <!-- Hero content -->
   <div class="relative z-10 mx-auto max-w-4xl px-4 pt-24 pb-32 text-center sm:px-6">
-    <p class="mb-3 text-sm font-medium tracking-widest text-primary uppercase">
-      FreeAgents Dev
+    <p
+      class="mb-3 text-sm font-medium tracking-widest text-primary uppercase"
+      data-i18n="hero.brand"
+    >
+      {t.hero.brand}
     </p>
 
-    <h1
-      class="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
-    >
+    <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
       {site.name}
     </h1>
 
-    <Typewriter roles={site.typewriterRoles} />
+    <Typewriter />
 
-    <p class="mx-auto mt-6 max-w-2xl text-base text-muted sm:text-lg">
-      {site.subtitle}
+    <p
+      class="mx-auto mt-6 max-w-2xl text-base text-muted sm:text-lg"
+      data-i18n="hero.subtitle"
+    >
+      {t.hero.subtitle}
     </p>
 
     <p class="mt-2 text-sm font-light tracking-wide text-white/60 italic">
-      "{site.tagline}"
+      "<span data-i18n="hero.tagline">{t.hero.tagline}</span>"
     </p>
 
-    <!-- CTAs -->
     <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
       <a
         href="#projects"
-        class="inline-flex w-full items-center justify-center rounded-lg bg-primary px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-primary/50 sm:w-auto"
+        class="btn-gradient inline-flex w-full items-center justify-center rounded-lg px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 sm:w-auto"
+        data-i18n="hero.ctaProjects"
       >
-        View Projects
+        {t.hero.ctaProjects}
       </a>
       <a
         href="#contact"
-        class="inline-flex w-full items-center justify-center rounded-lg border border-white/20 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-primary/50 hover:bg-white/10 sm:w-auto"
+        class="btn-outline inline-flex w-full items-center justify-center rounded-lg px-8 py-3.5 text-sm font-semibold text-white backdrop-blur-sm sm:w-auto"
+        data-i18n="hero.ctaContact"
       >
-        Contact Me
+        {t.hero.ctaContact}
       </a>
     </div>
 
-    <!-- Location -->
     <p class="mt-8 flex items-center justify-center gap-2 text-sm text-muted">
       <svg class="h-4 w-4 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

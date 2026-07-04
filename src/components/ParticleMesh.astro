@@ -1,7 +1,7 @@
-<!-- Neural network / terrain mesh particle canvas -->
+<!-- Neural network mesh — low opacity background -->
 <canvas
   id="particle-canvas"
-  class="absolute inset-0 h-full w-full"
+  class="absolute inset-0 h-full w-full opacity-40"
   aria-hidden="true"
 ></canvas>
 
@@ -23,9 +23,9 @@
   }
 
   let points: Point[] = [];
-  const COLS = 28;
-  const ROWS = 14;
-  const CONNECTION_DISTANCE = 90;
+  const COLS = 32;
+  const ROWS = 16;
+  const CONNECTION_DISTANCE = 85;
 
   function resize() {
     const parent = canvas.parentElement;
@@ -66,16 +66,15 @@
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    time += 0.012;
+    time += 0.01;
 
-    // Update point positions with wave displacement
     for (const p of points) {
       const offset = waveHeight(p.baseX, p.baseY, time);
       p.z = offset;
       p.y = p.baseY - offset * 0.6;
     }
 
-    // Draw connections
+    // Connected lines — neural network style
     for (let i = 0; i < points.length; i++) {
       for (let j = i + 1; j < points.length; j++) {
         const a = points[i];
@@ -85,44 +84,32 @@
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < CONNECTION_DISTANCE) {
-          const alpha = (1 - dist / CONNECTION_DISTANCE) * 0.35;
+          const alpha = (1 - dist / CONNECTION_DISTANCE) * 0.18;
           const avgZ = (a.z + b.z) / 2;
           const intensity = Math.max(0, (avgZ + 30) / 60);
-
-          const r = Math.round(59 + intensity * 0);
-          const g = Math.round(130 + intensity * 80);
-          const b2 = Math.round(246 - intensity * 30);
 
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(${r}, ${g}, ${b2}, ${alpha * (0.5 + intensity * 0.5)})`;
-          ctx.lineWidth = 0.8 + intensity * 0.6;
+          ctx.strokeStyle = intensity > 0.5
+            ? `rgba(6, 182, 212, ${alpha * (0.6 + intensity * 0.4)})`
+            : `rgba(59, 130, 246, ${alpha * (0.5 + intensity * 0.3)})`;
+          ctx.lineWidth = 0.6 + intensity * 0.4;
           ctx.stroke();
         }
       }
     }
 
-    // Draw nodes
+    // Nodes
     for (const p of points) {
       const intensity = Math.max(0, (p.z + 30) / 60);
-      const radius = 1.5 + intensity * 2;
+      const radius = 1 + intensity * 1.5;
 
-      // Glow
-      const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius * 4);
-      gradient.addColorStop(0, `rgba(6, 182, 212, ${0.3 + intensity * 0.4})`);
-      gradient.addColorStop(1, "rgba(6, 182, 212, 0)");
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, radius * 4, 0, Math.PI * 2);
-      ctx.fillStyle = gradient;
-      ctx.fill();
-
-      // Core dot
       ctx.beginPath();
       ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
       ctx.fillStyle = intensity > 0.5
-        ? `rgba(6, 182, 212, ${0.7 + intensity * 0.3})`
-        : `rgba(59, 130, 246, ${0.5 + intensity * 0.3})`;
+        ? `rgba(6, 182, 212, ${0.3 + intensity * 0.25})`
+        : `rgba(59, 130, 246, ${0.25 + intensity * 0.2})`;
       ctx.fill();
     }
 

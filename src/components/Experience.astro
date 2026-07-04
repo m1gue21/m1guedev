@@ -1,5 +1,8 @@
 ---
 import { experience } from "../data/experience";
+import { translations } from "../i18n/translations";
+
+const t = translations.en;
 ---
 
 <section id="experience" class="relative py-24 sm:py-32">
@@ -8,50 +11,65 @@ import { experience } from "../data/experience";
   ></div>
 
   <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-    <h2 class="section-title text-3xl font-bold text-white sm:text-4xl">
-      Experience
+    <h2 class="section-title text-3xl font-bold text-white sm:text-4xl" data-i18n="experience.title">
+      {t.experience.title}
     </h2>
-    <p class="mt-4 max-w-2xl text-muted">
-      My professional journey building digital products.
+    <p class="mt-4 max-w-2xl text-muted" data-i18n="experience.subtitle">
+      {t.experience.subtitle}
     </p>
 
-    <!-- Timeline -->
     <div class="relative mt-12">
-      <!-- Vertical line -->
+      <!-- Gradient timeline line -->
       <div
-        class="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-primary/20 sm:left-1/2 sm:-translate-x-px"
+        class="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary/20 sm:left-1/2 sm:-translate-x-px"
       ></div>
 
       <div class="space-y-8">
         {
-          experience.map((item, index) => (
-            <div
-              class={`relative flex flex-col gap-4 sm:flex-row sm:items-center ${
-                index % 2 === 0 ? "sm:flex-row-reverse" : ""
-              }`}
-            >
-              <!-- Dot -->
-              <div class="absolute left-4 top-6 z-10 h-3 w-3 -translate-x-1/2 rounded-full bg-primary timeline-dot sm:left-1/2"></div>
-
-              <!-- Spacer for alternating layout -->
-              <div class="hidden w-1/2 sm:block"></div>
-
-              <!-- Card -->
+          experience.map((item, index) => {
+            const data = t.experience.items[item.id];
+            return (
               <div
-                class={`w-full pl-10 sm:w-1/2 sm:pl-0 ${
-                  index % 2 === 0 ? "sm:pr-10 sm:text-right" : "sm:pl-10"
+                class={`relative flex flex-col gap-4 sm:flex-row sm:items-center ${
+                  index % 2 === 0 ? "sm:flex-row-reverse" : ""
                 }`}
               >
-                <div class="glass-card rounded-xl p-6 transition-all hover:border-primary/30">
-                  <p class="text-xs font-semibold tracking-widest text-secondary uppercase">
-                    {item.period}
-                  </p>
-                  <h3 class="mt-2 text-lg font-bold text-white">{item.company}</h3>
-                  <p class="mt-1 text-sm text-muted">{item.role}</p>
+                <div class="absolute left-4 top-6 z-10 h-3.5 w-3.5 -translate-x-1/2 rounded-full bg-primary timeline-dot ring-4 ring-navy sm:left-1/2"></div>
+
+                <div class="hidden w-1/2 sm:block"></div>
+
+                <div
+                  class={`w-full pl-10 sm:w-1/2 sm:pl-0 ${
+                    index % 2 === 0 ? "sm:pr-10 sm:text-right" : "sm:pl-10"
+                  }`}
+                >
+                  <div class="experience-card glass-card rounded-xl p-6">
+                    <p class="text-xs font-semibold tracking-widest text-secondary uppercase">
+                      {item.period}
+                    </p>
+                    <h3
+                      class="mt-2 text-lg font-bold text-white"
+                      data-i18n={`experience.items.${item.id}.company`}
+                    >
+                      {data.company}
+                    </h3>
+                    <p
+                      class="mt-1 text-sm text-muted"
+                      data-i18n={`experience.items.${item.id}.role`}
+                    >
+                      {data.role}
+                    </p>
+                    <p
+                      class="mt-3 text-sm text-primary/90"
+                      data-i18n={`experience.items.${item.id}.impact`}
+                    >
+                      {data.impact}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         }
       </div>
     </div>

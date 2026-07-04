@@ -1,55 +1,60 @@
+import { techIconMap } from "../utils/icons";
+
 export interface TechItem {
   name: string;
-  icon: string;
+  slug: string;
+  color: string;
 }
 
 export interface TechCategory {
-  category: string;
+  id: string;
   items: TechItem[];
+}
+
+function item(name: string): TechItem {
+  const meta = techIconMap[name];
+  return { name, slug: meta.slug, color: meta.color };
 }
 
 export const stackData: TechCategory[] = [
   {
-    category: "Frontend",
+    id: "frontend",
     items: [
-      { name: "Next.js", icon: "nextjs" },
-      { name: "React", icon: "react" },
-      { name: "Angular", icon: "angular" },
-      { name: "TypeScript", icon: "typescript" },
-      { name: "Tailwind CSS", icon: "tailwind" },
-      { name: "Astro", icon: "astro" },
+      item("Next.js"),
+      item("React"),
+      item("Angular"),
+      item("TypeScript"),
+      item("Tailwind CSS"),
+      item("Astro"),
     ],
   },
   {
-    category: "Backend",
+    id: "backend",
     items: [
-      { name: "Node.js", icon: "nodejs" },
-      { name: "NestJS", icon: "nestjs" },
-      { name: "Python", icon: "python" },
-      { name: "PostgreSQL", icon: "postgresql" },
-      { name: "MongoDB", icon: "mongodb" },
-      { name: "Supabase", icon: "supabase" },
+      item("Node.js"),
+      item("NestJS"),
+      item("Python"),
+      item("PostgreSQL"),
+      item("MongoDB"),
+      item("Supabase"),
     ],
   },
   {
-    category: "Cloud & DevOps",
+    id: "cloud",
     items: [
-      { name: "AWS", icon: "aws" },
-      { name: "Azure", icon: "azure" },
-      { name: "Docker", icon: "docker" },
-      { name: "Vercel", icon: "vercel" },
-      { name: "GitHub Actions", icon: "githubactions" },
+      item("AWS"),
+      item("Azure"),
+      item("Docker"),
+      item("Vercel"),
+      item("GitHub Actions"),
     ],
   },
   {
-    category: "AI",
-    items: [
-      { name: "OpenAI", icon: "openai" },
-      { name: "LangChain", icon: "langchain" },
-    ],
+    id: "ai",
+    items: [item("OpenAI"), item("LangChain")],
   },
   {
-    category: "Mobile",
-    items: [{ name: "Flutter", icon: "flutter" }],
+    id: "mobile",
+    items: [item("Flutter")],
   },
 ];
