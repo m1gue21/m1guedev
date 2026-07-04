@@ -4,57 +4,55 @@ export interface TechItem {
   name: string;
   slug: string;
   color: string;
+  category: string;
 }
 
-export interface TechCategory {
-  id: string;
-  items: TechItem[];
-}
-
-function item(name: string): TechItem {
+function item(name: string, category: string): TechItem {
   const meta = techIconMap[name];
-  return { name, slug: meta.slug, color: meta.color };
+  return { name, slug: meta.slug, color: meta.color, category };
 }
 
-export const stackData: TechCategory[] = [
-  {
-    id: "frontend",
-    items: [
-      item("Next.js"),
-      item("React"),
-      item("Angular"),
-      item("TypeScript"),
-      item("Tailwind CSS"),
-      item("Astro"),
-    ],
-  },
-  {
-    id: "backend",
-    items: [
-      item("Node.js"),
-      item("NestJS"),
-      item("Python"),
-      item("PostgreSQL"),
-      item("MongoDB"),
-      item("Supabase"),
-    ],
-  },
-  {
-    id: "cloud",
-    items: [
-      item("AWS"),
-      item("Azure"),
-      item("Docker"),
-      item("Vercel"),
-      item("GitHub Actions"),
-    ],
-  },
-  {
-    id: "ai",
-    items: [item("OpenAI"), item("LangChain")],
-  },
-  {
-    id: "mobile",
-    items: [item("Flutter")],
-  },
+export const stackCategories = [
+  { id: "frontend", labelKey: "stack.categories.frontend" },
+  { id: "backend", labelKey: "stack.categories.backend" },
+  { id: "cloud", labelKey: "stack.categories.cloud" },
+  { id: "ai", labelKey: "stack.categories.ai" },
+  { id: "mobile", labelKey: "stack.categories.mobile" },
+  { id: "tools", labelKey: "stack.categories.tools" },
+];
+
+export const stackItems: TechItem[] = [
+  // Frontend
+  item("Next.js", "frontend"),
+  item("React", "frontend"),
+  item("Angular", "frontend"),
+  item("TypeScript", "frontend"),
+  item("Tailwind CSS", "frontend"),
+  item("Astro", "frontend"),
+  item("Alpine.js", "frontend"),
+  item("Bootstrap", "frontend"),
+  // Backend
+  item("Node.js", "backend"),
+  item("NestJS", "backend"),
+  item("Python", "backend"),
+  item("PostgreSQL", "backend"),
+  item("MongoDB", "backend"),
+  item("Supabase", "backend"),
+  // Cloud & DevOps
+  item("AWS", "cloud"),
+  item("Azure", "cloud"),
+  item("Docker", "cloud"),
+  item("Vercel", "cloud"),
+  item("GitHub Actions", "cloud"),
+  item("Git", "cloud"),
+  item("Azure DevOps", "cloud"),
+  // AI
+  item("OpenAI", "ai"),
+  item("LangChain", "ai"),
+  // Mobile
+  item("Flutter", "mobile"),
+  // Tools
+  item("GitHub", "tools"),
+  item("Jira", "tools"),
+  item("Figma", "tools"),
 ];

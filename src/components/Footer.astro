@@ -1,14 +1,17 @@
 ---
-import { site } from "../data/site";
 import { translations } from "../i18n/translations";
+import { site } from "../data/site";
 
 const t = translations.en;
 ---
 
-<footer class="border-t border-white/10 bg-navy-light py-8">
-  <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6 lg:px-8">
+<footer>
+  <div class="footer-divider"></div>
+  <div class="container-main flex flex-col items-center justify-between gap-6 py-8 sm:flex-row">
     <p class="text-sm text-muted">
       &copy; 2026 <span data-i18n="footer.copyright">{t.footer.copyright}</span>
+      <span class="hidden sm:inline"> — </span>
+      <span class="block sm:inline" data-i18n="footer.builtWith">{t.footer.builtWith}</span>
     </p>
 
     <div class="flex items-center gap-6">

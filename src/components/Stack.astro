@@ -1,47 +1,90 @@
 ---
-import { stackData } from "../data/stack";
+import { stackItems, stackCategories } from "../data/stack";
 import SimpleIcon from "./SimpleIcon.astro";
 import { translations } from "../i18n/translations";
 
 const t = translations.en;
 ---
 
-<section id="stack" class="relative py-24 sm:py-32">
+<section id="stack" class="section-padding relative">
   <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.05)_0%,transparent_60%)]"
+    class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.04)_0%,transparent_60%)]"
   ></div>
 
-  <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-    <h2 class="section-title text-3xl font-bold text-white sm:text-4xl" data-i18n="stack.title">
-      {t.stack.title}
-    </h2>
-    <p class="mt-4 max-w-2xl text-muted" data-i18n="stack.subtitle">
-      {t.stack.subtitle}
-    </p>
+  <div class="container-main relative">
+    <div class="reveal text-center">
+      <h2 class="section-heading section-heading-center" data-i18n="stack.title">
+        {t.stack.title}
+      </h2>
+      <p class="mx-auto mt-6 max-w-2xl text-muted" data-i18n="stack.subtitle">
+        {t.stack.subtitle}
+      </p>
+    </div>
 
-    <div class="mt-12 space-y-12">
+    <!-- Category tabs -->
+    <div class="reveal mt-10 flex flex-wrap justify-center gap-2" id="stack-tabs" style="transition-delay: 100ms">
       {
-        stackData.map((category) => (
-          <div>
-            <h3
-              class="mb-6 text-sm font-semibold tracking-widest text-secondary uppercase"
-              data-i18n={`stack.categories.${category.id}`}
-            >
-              {t.stack.categories[category.id as keyof typeof t.stack.categories]}
-            </h3>
-            <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 sm:gap-4">
-              {category.items.map((tech) => (
-                <div class="glass-card stack-card group flex flex-col items-center gap-3 rounded-xl p-4 sm:p-5">
-                  <SimpleIcon slug={tech.slug} color={tech.color} name={tech.name} size={40} />
-                  <span class="text-center text-xs font-medium text-muted group-hover:text-white transition-colors">
-                    {tech.name}
-                  </span>
-                </div>
-              ))}
-            </div>
+        stackCategories.map((cat, i) => (
+          <button
+            type="button"
+            class={`stack-tab ${i === 0 ? "active" : ""}`}
+            data-category={cat.id}
+            data-i18n={`stack.categories.${cat.id}`}
+          >
+            {t.stack.categories[cat.id as keyof typeof t.stack.categories]}
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- Tech grid -->
+    <div
+      class="reveal mt-10 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 sm:gap-6"
+      id="stack-grid"
+      data-stagger
+      style="transition-delay: 200ms"
+    >
+      {
+        stackItems.map((tech) => (
+          <div
+            class={`stack-card glass-card stack-grid-item reveal-item group flex flex-col items-center gap-3 p-4 sm:p-5 ${tech.category === "frontend" ? "" : "hidden-tab"}`}
+            data-category={tech.category}
+          >
+            <SimpleIcon slug={tech.slug} color={tech.color} name={tech.name} size={40} />
+            <span class="text-center text-xs font-medium text-muted transition-colors group-hover:text-white">
+              {tech.name}
+            </span>
           </div>
         ))
       }
     </div>
   </div>
 </section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".stack-tab");
+  const items = document.querySelectorAll<HTMLElement>(".stack-grid-item");
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const category = tab.dataset.category;
+      if (!category) return;
+
+      tabs.forEach((t) => t.classList.toggle("active", t === tab));
+
+      items.forEach((item) => {
+        const match = item.dataset.category === category;
+        item.classList.toggle("hidden-tab", !match);
+        if (match) {
+          item.style.opacity = "0";
+          item.style.transform = "translateY(10px)";
+          requestAnimationFrame(() => {
+            item.style.transition = "opacity 0.35s ease, transform 0.35s ease";
+            item.style.opacity = "1";
+            item.style.transform = "translateY(0)";
+          });
+        }
+      });
+    });
+  });
+</script>

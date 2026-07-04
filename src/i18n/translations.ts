@@ -4,16 +4,16 @@ export interface Translations {
   meta: { title: string; description: string };
   nav: { links: string[] };
   hero: {
-    brand: string;
+    available: string;
     subtitle: string;
-    tagline: string;
     roles: string[];
     ctaProjects: string;
     ctaContact: string;
+    stats: { value: string; label: string }[];
   };
   about: {
     title: string;
-    text: string;
+    textHtml: string;
     highlights: { value: string; label: string }[];
   };
   stack: {
@@ -41,8 +41,9 @@ export interface Translations {
     email: string;
     linkedin: string;
     github: string;
+    response: string;
   };
-  footer: { copyright: string };
+  footer: { copyright: string; builtWith: string };
 }
 
 export const translations: Record<Locale, Translations> = {
@@ -56,16 +57,21 @@ export const translations: Record<Locale, Translations> = {
       links: ["About", "Stack", "Projects", "Experience", "Contact"],
     },
     hero: {
-      brand: "FreeAgents Dev",
+      available: "Available for remote work",
       subtitle: "Building scalable digital products and AI-driven solutions",
-      tagline: "Make it happen",
       roles: ["Software Engineer", "Fullstack Developer", "AI Solutions Builder"],
       ctaProjects: "View Projects",
       ctaContact: "Contact Me",
+      stats: [
+        { value: "4+", label: "Years" },
+        { value: "10+", label: "Projects" },
+        { value: "1,200+", label: "Businesses" },
+      ],
     },
     about: {
       title: "About",
-      text: "Software Engineer focused on building scalable digital products, modern web applications, and AI-powered solutions. I enjoy understanding business challenges and turning them into reliable, maintainable technical solutions.",
+      textHtml:
+        'Software Engineer focused on building <span class="highlight-cyan">scalable</span> digital products, modern web applications, and <span class="highlight-cyan">AI-powered</span> solutions. I enjoy understanding business challenges and turning them into reliable, <span class="highlight-cyan">maintainable</span> technical solutions.',
       highlights: [
         { value: "4+", label: "Years of Experience" },
         { value: "10+", label: "Projects Delivered" },
@@ -81,6 +87,7 @@ export const translations: Record<Locale, Translations> = {
         cloud: "Cloud & DevOps",
         ai: "AI",
         mobile: "Mobile",
+        tools: "Tools",
       },
     },
     projects: {
@@ -155,9 +162,11 @@ export const translations: Record<Locale, Translations> = {
       email: "Email",
       linkedin: "LinkedIn",
       github: "GitHub",
+      response: "Response within 24 hours",
     },
     footer: {
-      copyright: "Miguel Angel Gallego Alvarez",
+      copyright: "Miguel Angel Gallego",
+      builtWith: "Built with Astro & Tailwind",
     },
   },
   es: {
@@ -170,16 +179,21 @@ export const translations: Record<Locale, Translations> = {
       links: ["Sobre mí", "Stack", "Proyectos", "Experiencia", "Contacto"],
     },
     hero: {
-      brand: "FreeAgents Dev",
+      available: "Disponible para trabajo remoto",
       subtitle: "Construyendo productos digitales escalables y soluciones con IA",
-      tagline: "Make it happen",
       roles: ["Ingeniero de Software", "Desarrollador Fullstack", "Constructor de Soluciones IA"],
       ctaProjects: "Ver Proyectos",
       ctaContact: "Contáctame",
+      stats: [
+        { value: "4+", label: "Años" },
+        { value: "10+", label: "Proyectos" },
+        { value: "1,200+", label: "Negocios" },
+      ],
     },
     about: {
       title: "Sobre mí",
-      text: "Ingeniero de Software enfocado en construir productos digitales escalables, aplicaciones web modernas y soluciones potenciadas por inteligencia artificial. Disfruto entender los desafíos del negocio y convertirlos en soluciones técnicas confiables y mantenibles.",
+      textHtml:
+        'Ingeniero de Software enfocado en construir productos digitales <span class="highlight-cyan">escalables</span>, aplicaciones web modernas y soluciones <span class="highlight-cyan">potenciadas por IA</span>. Disfruto entender los desafíos del negocio y convertirlos en soluciones técnicas confiables y <span class="highlight-cyan">mantenibles</span>.',
       highlights: [
         { value: "4+", label: "Años de Experiencia" },
         { value: "10+", label: "Proyectos Entregados" },
@@ -195,6 +209,7 @@ export const translations: Record<Locale, Translations> = {
         cloud: "Cloud & DevOps",
         ai: "IA",
         mobile: "Mobile",
+        tools: "Herramientas",
       },
     },
     projects: {
@@ -269,9 +284,11 @@ export const translations: Record<Locale, Translations> = {
       email: "Email",
       linkedin: "LinkedIn",
       github: "GitHub",
+      response: "Respuesta en menos de 24 horas",
     },
     footer: {
-      copyright: "Miguel Angel Gallego Alvarez",
+      copyright: "Miguel Angel Gallego",
+      builtWith: "Hecho con Astro & Tailwind",
     },
   },
 };

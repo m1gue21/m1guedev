@@ -1,28 +1,28 @@
 export interface Project {
   id: string;
-  gradient: string;
+  accentBar: string;
   stack: string[];
 }
 
 export const projects: Project[] = [
   {
     id: "magic-stars",
-    gradient: "from-blue-600 via-primary to-purple-600",
+    accentBar: "from-cyan-500 to-blue-500",
     stack: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Supabase", "Tailwind CSS"],
   },
   {
     id: "freeagentsdev",
-    gradient: "from-secondary via-cyan-500 to-primary",
+    accentBar: "from-blue-500 to-purple-500",
     stack: ["Next.js", "React", "Node.js", "MongoDB", "Docker", "OpenAI", "LangChain"],
   },
   {
     id: "umanizales",
-    gradient: "from-emerald-600 via-teal-500 to-secondary",
+    accentBar: "from-emerald-500 to-cyan-500",
     stack: ["Astro", "Tailwind CSS", "Alpine.js"],
   },
   {
     id: "porter-metrics",
-    gradient: "from-orange-500 via-amber-500 to-red-500",
+    accentBar: "from-orange-500 to-red-500",
     stack: ["Angular", "TypeScript", "Tailwind CSS", "AWS Amplify"],
   },
 ];

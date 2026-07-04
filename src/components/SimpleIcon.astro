@@ -11,14 +11,17 @@ const whiteUrl = `https://cdn.simpleicons.org/${slug}/ffffff`;
 const brandUrl = `https://cdn.simpleicons.org/${slug}/${color}`;
 ---
 
-<div class="relative flex items-center justify-center" style={`width:${size}px;height:${size}px`}>
+<div
+  class="relative flex items-center justify-center"
+  style={`width:${size}px;height:${size}px;--icon-color:#${color}`}
+>
   <img
     src={whiteUrl}
     alt={name}
     width={size}
     height={size}
     loading="lazy"
-    class="absolute inset-0 m-auto transition-opacity duration-300 group-hover:opacity-0"
+    class="absolute inset-0 m-auto transition-all duration-300 group-hover:opacity-0 group-hover:scale-110"
   />
   <img
     src={brandUrl}
@@ -27,6 +30,6 @@ const brandUrl = `https://cdn.simpleicons.org/${slug}/${color}`;
     width={size}
     height={size}
     loading="lazy"
-    class="absolute inset-0 m-auto opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+    class="absolute inset-0 m-auto opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"
   />
 </div>
