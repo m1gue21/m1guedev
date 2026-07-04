@@ -5,11 +5,12 @@ export interface TechItem {
   slug: string;
   color: string;
   category: string;
+  local?: string;
 }
 
 function item(name: string, category: string): TechItem {
   const meta = techIconMap[name];
-  return { name, slug: meta.slug, color: meta.color, category };
+  return { name, slug: meta.slug, color: meta.color, category, local: meta.local };
 }
 
 export const stackCategories = [

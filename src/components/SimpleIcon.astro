@@ -4,11 +4,12 @@ interface Props {
   color: string;
   name: string;
   size?: number;
+  local?: string;
 }
 
-const { slug, color, name, size = 40 } = Astro.props;
-const whiteUrl = `https://cdn.simpleicons.org/${slug}/ffffff`;
-const brandUrl = `https://cdn.simpleicons.org/${slug}/${color}`;
+const { slug, color, name, size = 40, local } = Astro.props;
+const whiteUrl = local ?? `https://cdn.simpleicons.org/${slug}/ffffff`;
+const brandUrl = local ?? `https://cdn.simpleicons.org/${slug}/${color}`;
 ---
 
 <div
@@ -21,15 +22,19 @@ const brandUrl = `https://cdn.simpleicons.org/${slug}/${color}`;
     width={size}
     height={size}
     loading="lazy"
-    class="absolute inset-0 m-auto transition-all duration-300 group-hover:opacity-0 group-hover:scale-110"
+    class={`absolute inset-0 m-auto transition-all duration-300 group-hover:scale-110 ${local ? "" : "group-hover:opacity-0"}`}
   />
-  <img
-    src={brandUrl}
-    alt=""
-    aria-hidden="true"
-    width={size}
-    height={size}
-    loading="lazy"
-    class="absolute inset-0 m-auto opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"
-  />
+  {
+    !local && (
+      <img
+        src={brandUrl}
+        alt=""
+        aria-hidden="true"
+        width={size}
+        height={size}
+        loading="lazy"
+        class="absolute inset-0 m-auto opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"
+      />
+    )
+  }
 </div>

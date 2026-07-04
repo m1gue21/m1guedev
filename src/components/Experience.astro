@@ -1,11 +1,12 @@
 ---
 import { experience } from "../data/experience";
+import { getTechIcon, hexToRgba } from "../utils/icons";
 import { translations } from "../i18n/translations";
 
 const t = translations.en;
 ---
 
-<section id="experience" class="section-padding relative">
+<section id="experience" class="section-padding relative bg-bg-secondary">
   <div
     class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(59,130,246,0.04)_0%,transparent_60%)]"
   ></div>
@@ -18,61 +19,111 @@ const t = translations.en;
       </p>
     </div>
 
-    <div class="relative mt-16">
-      <!-- Central gradient line -->
+    <!-- Timeline -->
+    <div class="relative mt-16 md:mt-20">
+      <!-- Vertical gradient line -->
       <div
-        class="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary/20 md:left-1/2 md:-translate-x-px"
+        class="experience-timeline-line absolute bottom-0 left-[19px] top-0 w-0.5 md:left-[27px]"
       ></div>
 
-      <div class="space-y-10 md:space-y-12" data-stagger>
+      <div class="space-y-8" id="experience-list">
         {
           experience.map((item, index) => {
             const data = t.experience.items[item.id];
-            const isEven = index % 2 === 0;
             return (
               <div
-                class={`reveal-item relative flex items-center ${isEven ? "md:flex-row-reverse" : ""}`}
-                style={`transition-delay: ${index * 100}ms`}
+                class="exp-item reveal-item relative flex items-stretch"
+                style={`--exp-accent-from: ${item.accentFrom}; --exp-accent-to: ${item.accentTo}; --exp-glow: ${item.glowColor}; transition-delay: ${index * 150}ms`}
               >
                 <!-- Dot -->
-                <div class="absolute left-4 z-10 -translate-x-1/2 rounded-full timeline-dot md:left-1/2"></div>
+                <div class="relative z-10 flex w-10 shrink-0 justify-center md:w-14">
+                  <div class="experience-dot mt-7 rounded-full"></div>
+                </div>
 
-                <!-- Connection line to card -->
-                <div
-                  class={`absolute top-1/2 hidden h-px w-8 -translate-y-1/2 bg-gradient-to-r from-primary/50 to-secondary/50 md:block ${
-                    isEven
-                      ? "left-1/2 ml-2 bg-gradient-to-l"
-                      : "right-1/2 mr-2 ml-auto bg-gradient-to-r"
-                  }`}
-                  style={isEven ? "left: calc(50% + 8px); width: 32px;" : "right: calc(50% + 8px); width: 32px; left: auto;"}
-                ></div>
-
-                <!-- Spacer -->
-                <div class="hidden w-1/2 md:block"></div>
+                <!-- Connector dot → card -->
+                <div class="mt-7 hidden w-6 shrink-0 items-center sm:flex md:w-8">
+                  <div class="h-px w-full bg-gradient-to-r from-primary/40 to-secondary/20"></div>
+                </div>
 
                 <!-- Card -->
-                <div class={`w-full pl-12 md:w-1/2 md:pl-0 ${isEven ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
-                  <div class="experience-card glass-card p-6">
-                    <span class="date-pill">{item.period}</span>
-                    <h3
-                      class="mt-3 text-lg font-bold text-white"
-                      data-i18n={`experience.items.${item.id}.company`}
-                    >
-                      {data.company}
-                    </h3>
+                <div class="min-w-0 flex-1">
+                  <article class="experience-card p-5 sm:p-6">
+                    <!-- Header -->
+                    <div class="flex flex-wrap items-start justify-between gap-3">
+                      <div class="flex flex-wrap items-center gap-3">
+                        <h3
+                          class="text-lg font-bold text-white"
+                          data-i18n={`experience.items.${item.id}.company`}
+                        >
+                          {data.company}
+                        </h3>
+                        {
+                          item.isCurrent && (
+                            <span class="exp-current-badge">
+                              <span class="status-dot h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                              <span data-i18n="experience.current">{t.experience.current}</span>
+                            </span>
+                          )
+                        }
+                      </div>
+                      <span class="exp-date-pill">{item.period}</span>
+                    </div>
+
+                    <!-- Role -->
                     <p
-                      class="mt-1 text-sm font-medium text-secondary"
+                      class="exp-role mt-2 text-sm font-medium"
                       data-i18n={`experience.items.${item.id}.role`}
                     >
                       {data.role}
                     </p>
+
+                    <!-- Metadata -->
+                    <div class="exp-meta mt-3 flex flex-wrap items-center gap-1">
+                      <span class="inline-flex items-center gap-1">
+                        <svg class="h-3.5 w-3.5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        {item.location}
+                      </span>
+                      <span class="text-text-muted">·</span>
+                      <span class="inline-flex items-center gap-1">
+                        <svg class="h-3.5 w-3.5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {item.duration}
+                      </span>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="exp-divider my-4"></div>
+
+                    <!-- Impact -->
                     <p
-                      class="mt-3 text-sm text-muted"
+                      class="text-sm leading-relaxed text-muted"
                       data-i18n={`experience.items.${item.id}.impact`}
                     >
                       {data.impact}
                     </p>
-                  </div>
+
+                    <!-- Tech tags -->
+                    <div class="mt-4 flex flex-wrap gap-2">
+                      {
+                        item.stack.map((tech) => {
+                          const icon = getTechIcon(tech);
+                          const color = icon.color.length === 6 ? icon.color : "3b82f6";
+                          return (
+                            <span
+                              class="exp-tech-tag text-white/90"
+                              style={`background: ${hexToRgba(color, 0.1)}; border: 1px solid ${hexToRgba(color, 0.25)}`}
+                            >
+                              {tech}
+                            </span>
+                          );
+                        })
+                      }
+                    </div>
+                  </article>
                 </div>
               </div>
             );
@@ -82,3 +133,20 @@ const t = translations.en;
     </div>
   </div>
 </section>
+
+<script>
+  // Observe experience items with 150ms stagger (handled via CSS delay on reveal-item)
+  const expItems = document.querySelectorAll("#experience-list .reveal-item");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+  );
+  expItems.forEach((el) => observer.observe(el));
+</script>

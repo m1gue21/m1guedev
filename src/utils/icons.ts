@@ -1,6 +1,8 @@
 export interface TechIconMeta {
   slug: string;
   color: string;
+  /** Local SVG path when icon is unavailable on Simple Icons CDN */
+  local?: string;
 }
 
 /** Simple Icons slug + official brand color (hex without #) */
@@ -19,20 +21,21 @@ export const techIconMap: Record<string, TechIconMeta> = {
   PostgreSQL: { slug: "postgresql", color: "4169E1" },
   MongoDB: { slug: "mongodb", color: "47A248" },
   Supabase: { slug: "supabase", color: "3ECF8E" },
-  AWS: { slug: "amazonaws", color: "FF9900" },
-  Azure: { slug: "microsoftazure", color: "0078D4" },
-  "Azure DevOps": { slug: "azuredevops", color: "0078D4" },
+  AWS: { slug: "amazonaws", color: "FF9900", local: "/icons/aws.svg" },
+  Azure: { slug: "microsoftazure", color: "0078D4", local: "/icons/azure.svg" },
+  "Azure DevOps": { slug: "azuredevops", color: "0078D4", local: "/icons/azuredevops.svg" },
   Docker: { slug: "docker", color: "2496ED" },
   Vercel: { slug: "vercel", color: "ffffff" },
   "GitHub Actions": { slug: "githubactions", color: "2088FF" },
   Git: { slug: "git", color: "F05032" },
-  OpenAI: { slug: "openai", color: "ffffff" },
+  OpenAI: { slug: "openai", color: "ffffff", local: "/icons/openai.svg" },
   LangChain: { slug: "langchain", color: "1C3C3C" },
   Flutter: { slug: "flutter", color: "02569B" },
   GitHub: { slug: "github", color: "ffffff" },
   Jira: { slug: "jira", color: "0052CC" },
   Figma: { slug: "figma", color: "F24E1E" },
   "AWS Amplify": { slug: "awsamplify", color: "FF9900" },
+  LinkedIn: { slug: "linkedin", color: "0A66C2", local: "/icons/linkedin.svg" },
 };
 
 export function getIconUrl(slug: string, color = "ffffff"): string {
@@ -41,6 +44,13 @@ export function getIconUrl(slug: string, color = "ffffff"): string {
 
 export function getTechIcon(name: string): TechIconMeta {
   return techIconMap[name] ?? { slug: "github", color: "ffffff" };
+}
+
+export function getTechIconSrc(name: string, variant: "white" | "brand" = "brand"): string {
+  const icon = getTechIcon(name);
+  if (icon.local) return icon.local;
+  const color = variant === "white" ? "ffffff" : icon.color;
+  return getIconUrl(icon.slug, color);
 }
 
 export function hexToRgba(hex: string, alpha: number): string {

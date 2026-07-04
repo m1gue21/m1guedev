@@ -33,6 +33,7 @@ export interface Translations {
   experience: {
     title: string;
     subtitle: string;
+    current: string;
     items: Record<string, { company: string; role: string; impact: string }>;
   };
   contact: {
@@ -64,7 +65,7 @@ export const translations: Record<Locale, Translations> = {
       ctaContact: "Contact Me",
       stats: [
         { value: "4+", label: "Years" },
-        { value: "10+", label: "Projects" },
+        { value: "50+", label: "Projects" },
         { value: "1,200+", label: "Businesses" },
       ],
     },
@@ -74,7 +75,7 @@ export const translations: Record<Locale, Translations> = {
         'Software Engineer focused on building <span class="highlight-cyan">scalable</span> digital products, modern web applications, and <span class="highlight-cyan">AI-powered</span> solutions. I enjoy understanding business challenges and turning them into reliable, <span class="highlight-cyan">maintainable</span> technical solutions.',
       highlights: [
         { value: "4+", label: "Years of Experience" },
-        { value: "10+", label: "Projects Delivered" },
+        { value: "50+", label: "Projects Delivered" },
         { value: "1,200+", label: "Businesses Impacted" },
       ],
     },
@@ -128,31 +129,37 @@ export const translations: Record<Locale, Translations> = {
     experience: {
       title: "Experience",
       subtitle: "My professional journey building digital products.",
+      current: "Current",
       items: {
         freeagentsdev: {
           company: "Freeagentsdev",
           role: "Founder & Lead Software Engineer",
-          impact: "Led 4-developer team delivering custom solutions for SMBs",
+          impact:
+            "Founded and led a 4-developer software studio delivering custom web apps, e-commerce platforms and AI-powered solutions for SMBs with 100–500 active users per client.",
         },
         "magic-stars": {
           company: "Magic Stars",
           role: "Lead Software Engineer",
-          impact: "Built logistics platform handling 600+ daily orders",
+          impact:
+            "Designed and built a logistics platform from scratch replacing spreadsheet-based operations — enabling real-time coordination of 20+ messengers and 600+ daily orders across multiple companies.",
         },
         sinapsis: {
           company: "SINAPSIS",
           role: "Frontend Developer",
-          impact: "Developed performant web apps with Next.js and Azure DevOps",
+          impact:
+            "Developed performant web apps with Next.js and React, built reusable component libraries, and contributed to CI/CD pipelines using Azure DevOps within agile Scrum teams.",
         },
         umanizales: {
           company: "Universidad de Manizales",
           role: "Frontend Lead",
-          impact: "Led frontend team of 2 interns for university platform",
+          impact:
+            "Led frontend development of a university mobility platform serving 300+ students, managing a team of 2 interns and driving architecture decisions and code quality standards.",
         },
         "porter-metrics": {
           company: "Porter Metrics",
           role: "Junior Frontend Developer",
-          impact: "Migrated admin panel serving 1,200+ business clients",
+          impact:
+            "Contributed to the Angular 12 → 16 migration of the admin panel, improving stability, security compliance and maintainability for a SaaS product used by 1,200+ business clients.",
         },
       },
     },
@@ -186,7 +193,7 @@ export const translations: Record<Locale, Translations> = {
       ctaContact: "Contáctame",
       stats: [
         { value: "4+", label: "Años" },
-        { value: "10+", label: "Proyectos" },
+        { value: "50+", label: "Proyectos" },
         { value: "1,200+", label: "Negocios" },
       ],
     },
@@ -196,7 +203,7 @@ export const translations: Record<Locale, Translations> = {
         'Ingeniero de Software enfocado en construir productos digitales <span class="highlight-cyan">escalables</span>, aplicaciones web modernas y soluciones <span class="highlight-cyan">potenciadas por IA</span>. Disfruto entender los desafíos del negocio y convertirlos en soluciones técnicas confiables y <span class="highlight-cyan">mantenibles</span>.',
       highlights: [
         { value: "4+", label: "Años de Experiencia" },
-        { value: "10+", label: "Proyectos Entregados" },
+        { value: "50+", label: "Proyectos Entregados" },
         { value: "1,200+", label: "Negocios Impactados" },
       ],
     },
@@ -250,31 +257,37 @@ export const translations: Record<Locale, Translations> = {
     experience: {
       title: "Experiencia",
       subtitle: "Mi trayectoria profesional construyendo productos digitales.",
+      current: "Actual",
       items: {
         freeagentsdev: {
           company: "Freeagentsdev",
           role: "Fundador & Lead Software Engineer",
-          impact: "Lideré equipo de 4 desarrolladores entregando soluciones a medida para PyMEs",
+          impact:
+            "Fundé y lideré un estudio de software de 4 desarrolladores entregando aplicaciones web, e-commerce y soluciones con IA para pymes con 100–500 usuarios activos por cliente.",
         },
         "magic-stars": {
           company: "Magic Stars",
           role: "Lead Software Engineer",
-          impact: "Construí plataforma logística manejando 600+ pedidos diarios",
+          impact:
+            "Diseñé y construí una plataforma logística desde cero reemplazando operaciones manuales — coordinando en tiempo real 20+ mensajeros y 600+ pedidos diarios entre múltiples empresas.",
         },
         sinapsis: {
           company: "SINAPSIS",
           role: "Desarrollador Frontend",
-          impact: "Desarrollé apps web performantes con Next.js y Azure DevOps",
+          impact:
+            "Desarrollé aplicaciones web con Next.js y React, construí librerías de componentes reutilizables y contribuí a pipelines CI/CD con Azure DevOps en equipos ágiles Scrum.",
         },
         umanizales: {
           company: "Universidad de Manizales",
           role: "Frontend Lead",
-          impact: "Lideré equipo frontend de 2 practicantes para plataforma universitaria",
+          impact:
+            "Lideré el frontend de una plataforma universitaria de movilidad para 300+ estudiantes, gestionando 2 practicantes y definiendo decisiones de arquitectura y estándares de calidad.",
         },
         "porter-metrics": {
           company: "Porter Metrics",
           role: "Junior Frontend Developer",
-          impact: "Migré panel admin sirviendo 1,200+ clientes empresariales",
+          impact:
+            "Contribuí a la migración de Angular 12 → 16 del panel administrativo, mejorando estabilidad, seguridad y mantenibilidad de un producto SaaS usado por 1,200+ empresas clientes.",
         },
       },
     },

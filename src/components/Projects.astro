@@ -1,6 +1,6 @@
 ---
 import { projects } from "../data/projects";
-import { getTechIcon, hexToRgba } from "../utils/icons";
+import { getTechIcon, getTechIconSrc, hexToRgba } from "../utils/icons";
 import { translations } from "../i18n/translations";
 
 const t = translations.en;
@@ -74,7 +74,7 @@ const t = translations.en;
                         style={`background:${bg};border:1px solid ${hexToRgba(icon.color.length === 6 ? icon.color : "3b82f6", 0.25)}`}
                       >
                         <img
-                          src={`https://cdn.simpleicons.org/${icon.slug}/${icon.color}`}
+                          src={getTechIconSrc(tech, "brand")}
                           alt=""
                           width="14"
                           height="14"

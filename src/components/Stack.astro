@@ -50,7 +50,7 @@ const t = translations.en;
             class={`stack-card glass-card stack-grid-item reveal-item group flex flex-col items-center gap-3 p-4 sm:p-5 ${tech.category === "frontend" ? "" : "hidden-tab"}`}
             data-category={tech.category}
           >
-            <SimpleIcon slug={tech.slug} color={tech.color} name={tech.name} size={40} />
+                  <SimpleIcon slug={tech.slug} color={tech.color} name={tech.name} size={40} local={tech.local} />
             <span class="text-center text-xs font-medium text-muted transition-colors group-hover:text-white">
               {tech.name}
             </span>
