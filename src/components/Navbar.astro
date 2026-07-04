@@ -1,0 +1,111 @@
+---
+import { site } from "../data/site";
+---
+
+<header
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <nav
+    class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+  >
+    <!-- Logo -->
+    <a
+      href="#"
+      class="text-lg font-bold tracking-tight text-white transition-colors hover:text-primary"
+    >
+      {site.shortName}
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden items-center gap-8 md:flex">
+      {
+        site.navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm font-medium text-muted transition-colors hover:text-white"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Mobile menu button -->
+    <button
+      id="menu-toggle"
+      class="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white md:hidden"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <svg id="menu-icon-open" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg id="menu-icon-close" class="hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-white/10 bg-navy/95 backdrop-blur-xl md:hidden"
+  >
+    <ul class="flex flex-col gap-1 px-4 py-4">
+      {
+        site.navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="mobile-nav-link block rounded-lg px-4 py-3 text-sm font-medium text-muted transition-colors hover:bg-white/5 hover:text-white"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</header>
+
+<script>
+  const navbar = document.getElementById("navbar");
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const iconOpen = document.getElementById("menu-icon-open");
+  const iconClose = document.getElementById("menu-icon-close");
+
+  // Sticky blur on scroll
+  function updateNavbar() {
+    if (!navbar) return;
+    if (window.scrollY > 20) {
+      navbar.classList.add("bg-navy/80", "backdrop-blur-xl", "border-b", "border-white/10", "shadow-lg", "shadow-primary/5");
+    } else {
+      navbar.classList.remove("bg-navy/80", "backdrop-blur-xl", "border-b", "border-white/10", "shadow-lg", "shadow-primary/5");
+    }
+  }
+
+  window.addEventListener("scroll", updateNavbar, { passive: true });
+  updateNavbar();
+
+  // Mobile menu toggle
+  menuToggle?.addEventListener("click", () => {
+    const isOpen = mobileMenu?.classList.toggle("hidden") === false;
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    iconOpen?.classList.toggle("hidden", isOpen);
+    iconClose?.classList.toggle("hidden", !isOpen);
+  });
+
+  // Close mobile menu on link click
+  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu?.classList.add("hidden");
+      menuToggle?.setAttribute("aria-expanded", "false");
+      iconOpen?.classList.remove("hidden");
+      iconClose?.classList.add("hidden");
+    });
+  });
+</script>

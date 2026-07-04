@@ -1,0 +1,59 @@
+---
+interface Props {
+  roles: string[];
+}
+
+const { roles } = Astro.props;
+---
+
+<p class="mt-4 text-xl font-light text-muted sm:text-2xl md:text-3xl">
+  <span id="typewriter-text" class="text-secondary"></span
+  ><span class="typewriter-cursor text-primary">|</span>
+</p>
+
+<script define:vars={{ roles }}>
+  const textEl = document.getElementById("typewriter-text");
+  if (!textEl) throw new Error("Typewriter element not found");
+
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let pauseCounter = 0;
+
+  const TYPE_SPEED = 80;
+  const DELETE_SPEED = 40;
+  const PAUSE_END = 30;
+  const PAUSE_START = 12;
+
+  function tick() {
+    const currentRole = roles[roleIndex];
+
+    if (!isDeleting && pauseCounter === 0) {
+      textEl.textContent = currentRole.substring(0, charIndex + 1);
+      charIndex++;
+
+      if (charIndex === currentRole.length) {
+        isDeleting = true;
+        pauseCounter = PAUSE_END;
+      }
+    } else if (isDeleting && pauseCounter === 0) {
+      textEl.textContent = currentRole.substring(0, charIndex - 1);
+      charIndex--;
+
+      if (charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        pauseCounter = PAUSE_START;
+      }
+    }
+
+    if (pauseCounter > 0) {
+      pauseCounter--;
+    }
+
+    const speed = isDeleting ? DELETE_SPEED : TYPE_SPEED;
+    setTimeout(tick, speed);
+  }
+
+  tick();
+</script>

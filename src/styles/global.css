@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0a0f1e;
+  --color-navy-light: #111827;
+  --color-navy-card: #0f172a;
+  --color-primary: #3b82f6;
+  --color-secondary: #06b6d4;
+  --color-muted: #94a3b8;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-navy);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Grid pattern overlay — inspired by the LinkedIn banner */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Typewriter cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typewriter-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+/* Fade-in on scroll */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Timeline connector glow */
+.timeline-dot {
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+}
+
+/* Glass card effect */
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.8) 0%,
+    rgba(10, 15, 30, 0.6) 100%
+  );
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  backdrop-filter: blur(12px);
+}
+
+/* Section heading underline glow */
+.section-title::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin-top: 12px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+}

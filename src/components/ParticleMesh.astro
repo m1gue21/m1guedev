@@ -1,0 +1,141 @@
+<!-- Neural network / terrain mesh particle canvas -->
+<canvas
+  id="particle-canvas"
+  class="absolute inset-0 h-full w-full"
+  aria-hidden="true"
+></canvas>
+
+<script>
+  const canvas = document.getElementById("particle-canvas") as HTMLCanvasElement;
+  if (!canvas) throw new Error("Canvas not found");
+
+  const ctx = canvas.getContext("2d")!;
+
+  let animationId: number;
+  let time = 0;
+
+  interface Point {
+    x: number;
+    y: number;
+    baseX: number;
+    baseY: number;
+    z: number;
+  }
+
+  let points: Point[] = [];
+  const COLS = 28;
+  const ROWS = 14;
+  const CONNECTION_DISTANCE = 90;
+
+  function resize() {
+    const parent = canvas.parentElement;
+    if (!parent) return;
+    canvas.width = parent.clientWidth;
+    canvas.height = parent.clientHeight;
+    initPoints();
+  }
+
+  function initPoints() {
+    points = [];
+    const spacingX = canvas.width / (COLS - 1);
+    const spacingY = canvas.height / (ROWS - 1);
+
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        points.push({
+          x: col * spacingX,
+          y: row * spacingY,
+          baseX: col * spacingX,
+          baseY: row * spacingY,
+          z: 0,
+        });
+      }
+    }
+  }
+
+  function waveHeight(x: number, y: number, t: number): number {
+    const nx = x / canvas.width;
+    const ny = y / canvas.height;
+    return (
+      Math.sin(nx * 4 + t * 0.8) * 30 +
+      Math.sin(ny * 3 + t * 0.6) * 25 +
+      Math.sin((nx + ny) * 5 + t * 1.2) * 20 +
+      Math.cos(nx * 2 - t * 0.5) * 15
+    );
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    time += 0.012;
+
+    // Update point positions with wave displacement
+    for (const p of points) {
+      const offset = waveHeight(p.baseX, p.baseY, time);
+      p.z = offset;
+      p.y = p.baseY - offset * 0.6;
+    }
+
+    // Draw connections
+    for (let i = 0; i < points.length; i++) {
+      for (let j = i + 1; j < points.length; j++) {
+        const a = points[i];
+        const b = points[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < CONNECTION_DISTANCE) {
+          const alpha = (1 - dist / CONNECTION_DISTANCE) * 0.35;
+          const avgZ = (a.z + b.z) / 2;
+          const intensity = Math.max(0, (avgZ + 30) / 60);
+
+          const r = Math.round(59 + intensity * 0);
+          const g = Math.round(130 + intensity * 80);
+          const b2 = Math.round(246 - intensity * 30);
+
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(${r}, ${g}, ${b2}, ${alpha * (0.5 + intensity * 0.5)})`;
+          ctx.lineWidth = 0.8 + intensity * 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    for (const p of points) {
+      const intensity = Math.max(0, (p.z + 30) / 60);
+      const radius = 1.5 + intensity * 2;
+
+      // Glow
+      const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius * 4);
+      gradient.addColorStop(0, `rgba(6, 182, 212, ${0.3 + intensity * 0.4})`);
+      gradient.addColorStop(1, "rgba(6, 182, 212, 0)");
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, radius * 4, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Core dot
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = intensity > 0.5
+        ? `rgba(6, 182, 212, ${0.7 + intensity * 0.3})`
+        : `rgba(59, 130, 246, ${0.5 + intensity * 0.3})`;
+      ctx.fill();
+    }
+
+    animationId = requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+
+  window.addEventListener("resize", resize);
+
+  document.addEventListener("astro:before-swap", () => {
+    cancelAnimationFrame(animationId);
+    window.removeEventListener("resize", resize);
+  });
+</script>
