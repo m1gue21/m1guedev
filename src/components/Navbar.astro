@@ -7,7 +7,7 @@ const t = translations.en;
 
 <header id="navbar" class="navbar-base fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <nav class="container-main flex items-center justify-between py-4">
-    <a href="#" class="logo-gradient text-lg font-bold tracking-tight">
+    <a href="#hero" class="logo-gradient text-lg font-bold tracking-tight">
       {site.shortName}
     </a>
 
@@ -51,9 +51,10 @@ const t = translations.en;
       </div>
       <button
         id="menu-toggle"
-        class="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10"
+        class="relative z-[110] flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-bg-primary/80"
         aria-label="Toggle menu"
         aria-expanded="false"
+        aria-controls="mobile-menu"
       >
         <div id="hamburger" class="hamburger flex flex-col gap-1.5">
           <span class="hamburger-line line-1"></span>
@@ -63,19 +64,35 @@ const t = translations.en;
       </button>
     </div>
   </nav>
+</header>
 
-  <!-- Mobile overlay menu -->
-  <div
-    id="mobile-menu"
-    class="mobile-overlay fixed inset-0 top-[65px] z-40 hidden md:hidden"
-  >
-    <ul class="flex flex-col items-center justify-center gap-2 px-6 pt-12">
+<!-- Backdrop -->
+<div
+  id="mobile-menu-backdrop"
+  class="mobile-menu-backdrop fixed inset-0 z-[100] hidden md:hidden"
+  aria-hidden="true"
+></div>
+
+<!-- Slide-in drawer -->
+<aside
+  id="mobile-menu"
+  class="mobile-drawer fixed inset-y-0 right-0 z-[105] flex w-[min(300px,88vw)] translate-x-full flex-col border-l border-white/10 bg-bg-primary shadow-2xl transition-transform duration-300 ease-out md:hidden"
+  aria-hidden="true"
+  aria-label="Navigation menu"
+>
+  <div class="border-b border-white/10 px-6 py-5">
+    <p class="logo-gradient text-lg font-bold">{site.shortName}</p>
+    <p class="mt-1 text-xs text-muted">Navigation</p>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto px-4 py-6">
+    <ul class="flex flex-col gap-1">
       {
         t.nav.links.map((label, i) => (
-          <li class="w-full">
+          <li>
             <a
               href={site.navHrefs[i]}
-              class="mobile-nav-link block rounded-xl px-6 py-4 text-center text-lg font-medium text-muted transition-colors hover:bg-white/5 hover:text-white"
+              class="mobile-nav-link block rounded-xl px-4 py-3.5 text-base font-medium text-muted transition-colors hover:bg-white/5 hover:text-white"
               data-i18n={`nav.links.${i}`}
             >
               {label}
@@ -84,5 +101,17 @@ const t = translations.en;
         ))
       }
     </ul>
+  </nav>
+
+  <div class="border-t border-white/10 px-6 py-5">
+    <p class="mb-3 text-xs font-medium uppercase tracking-wider text-text-muted">Language</p>
+    <div class="lang-pill w-fit">
+      <button type="button" data-lang-btn="en" aria-pressed="true" class="text-secondary">
+        EN
+      </button>
+      <button type="button" data-lang-btn="es" aria-pressed="false" class="text-muted">
+        ES
+      </button>
+    </div>
   </div>
-</header>
+</aside>

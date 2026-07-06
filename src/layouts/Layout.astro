@@ -10,7 +10,9 @@ interface Props {
 const { title, description } = Astro.props;
 const pageTitle = title ?? site.seo.title;
 const pageDescription = description ?? site.seo.description;
-const ogImage = new URL(site.seo.ogImage, Astro.site ?? "https://miguelgallego.dev").href;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(site.seo.ogImage, Astro.site).href;
 ---
 
 <!doctype html>
@@ -20,22 +22,39 @@ const ogImage = new URL(site.seo.ogImage, Astro.site ?? "https://miguelgallego.d
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
     <meta name="author" content={site.name} />
+    <link rel="canonical" href={canonicalURL} />
 
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.shortName} />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={String(site.seo.ogImageWidth)} />
+    <meta property="og:image:height" content={String(site.seo.ogImageHeight)} />
+    <meta property="og:image:alt" content={site.seo.ogImageAlt} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_CO" />
 
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={site.seo.ogImageAlt} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{pageTitle}</title>
   </head>
   <body class="bg-bg-primary text-white antialiased">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
+    >
+      Skip to content
+    </a>
     <slot />
     <script>
       import "../scripts/app.ts";

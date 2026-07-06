@@ -11,6 +11,7 @@ let countersInitialized = false;
 let i18nInitialized = false;
 let revealInitialized = false;
 let navSpyInitialized = false;
+let mobileMenuInitialized = false;
 
 function getLocale(): Locale {
   const stored = localStorage.getItem(STORAGE_KEY) as Locale | null;
@@ -31,6 +32,10 @@ function updateMeta() {
   document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", t.title);
   document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", t.description);
   document.documentElement.lang = currentLocale;
+  document.querySelector('meta[property="og:locale"]')?.setAttribute(
+    "content",
+    currentLocale === "es" ? "es_CO" : "en_US"
+  );
 }
 
 function updateLangToggle() {
@@ -200,6 +205,11 @@ function initNavSpy() {
       const href = link.getAttribute("href");
       link.classList.toggle("active", href === `#${current}`);
     });
+
+    document.querySelectorAll<HTMLAnchorElement>(".mobile-nav-link").forEach((link) => {
+      const href = link.getAttribute("href");
+      link.classList.toggle("active", href === `#${current}`);
+    });
   }
 
   window.addEventListener("scroll", update, { passive: true });
@@ -220,24 +230,45 @@ function initSmoothScroll() {
 }
 
 function initMobileMenu() {
+  if (mobileMenuInitialized) return;
+  mobileMenuInitialized = true;
+
   const menuToggle = document.getElementById("menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
+  const backdrop = document.getElementById("mobile-menu-backdrop");
   const hamburger = document.getElementById("hamburger");
 
-  menuToggle?.addEventListener("click", () => {
-    const isOpen = mobileMenu?.classList.toggle("hidden") === false;
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  function setMenuOpen(isOpen: boolean) {
+    mobileMenu?.classList.toggle("is-open", isOpen);
+    mobileMenu?.classList.toggle("translate-x-full", !isOpen);
+    backdrop?.classList.toggle("hidden", !isOpen);
+    backdrop?.classList.toggle("is-open", isOpen);
+    menuToggle?.setAttribute("aria-expanded", String(isOpen));
+    mobileMenu?.setAttribute("aria-hidden", String(!isOpen));
+    backdrop?.setAttribute("aria-hidden", String(!isOpen));
     hamburger?.classList.toggle("open", isOpen);
     document.body.classList.toggle("overflow-hidden", isOpen);
+  }
+
+  function closeMenu() {
+    setMenuOpen(false);
+  }
+
+  menuToggle?.addEventListener("click", () => {
+    const isOpen = !mobileMenu?.classList.contains("is-open");
+    setMenuOpen(isOpen);
+  });
+
+  backdrop?.addEventListener("click", closeMenu);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && mobileMenu?.classList.contains("is-open")) {
+      closeMenu();
+    }
   });
 
   document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileMenu?.classList.add("hidden");
-      menuToggle?.setAttribute("aria-expanded", "false");
-      hamburger?.classList.remove("open");
-      document.body.classList.remove("overflow-hidden");
-    });
+    link.addEventListener("click", closeMenu);
   });
 }
 

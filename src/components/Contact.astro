@@ -24,14 +24,16 @@ const t = translations.en;
       </p>
     </div>
 
-    <div class="reveal mt-12 flex flex-col items-stretch gap-4 sm:flex-row sm:justify-center sm:gap-6" style="transition-delay: 150ms">
+    <div class="reveal mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-center lg:gap-6" style="transition-delay: 150ms">
       <a
         href={`mailto:${site.email}`}
         class="contact-btn contact-btn-email glass-card flex items-center justify-center gap-3 px-8 py-5 sm:min-w-[180px]"
+        aria-label={`Email: ${site.email}`}
       >
         <img
           src="https://cdn.simpleicons.org/gmail/EA4335"
           alt=""
+          aria-hidden="true"
           width="22"
           height="22"
           class="h-5 w-5"
@@ -44,10 +46,12 @@ const t = translations.en;
         target="_blank"
         rel="noopener noreferrer"
         class="contact-btn contact-btn-linkedin glass-card flex items-center justify-center gap-3 px-8 py-5 sm:min-w-[180px]"
+        aria-label="LinkedIn profile (opens in new tab)"
       >
         <img
           src="/icons/linkedin.svg"
           alt=""
+          aria-hidden="true"
           width="22"
           height="22"
           class="h-5 w-5"
@@ -56,14 +60,34 @@ const t = translations.en;
       </a>
 
       <a
+        href={site.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="contact-btn contact-btn-whatsapp glass-card flex items-center justify-center gap-3 px-8 py-5 sm:min-w-[180px]"
+        aria-label="WhatsApp +573004940576 (opens in new tab)"
+      >
+        <img
+          src="https://cdn.simpleicons.org/whatsapp/25D366"
+          alt=""
+          aria-hidden="true"
+          width="22"
+          height="22"
+          class="h-5 w-5"
+        />
+        <span class="font-semibold" data-i18n="contact.whatsapp">{t.contact.whatsapp}</span>
+      </a>
+
+      <a
         href={site.github}
         target="_blank"
         rel="noopener noreferrer"
         class="contact-btn contact-btn-github glass-card flex items-center justify-center gap-3 px-8 py-5 sm:min-w-[180px]"
+        aria-label="GitHub profile (opens in new tab)"
       >
         <img
           src="https://cdn.simpleicons.org/github/ffffff"
           alt=""
+          aria-hidden="true"
           width="22"
           height="22"
           class="h-5 w-5"

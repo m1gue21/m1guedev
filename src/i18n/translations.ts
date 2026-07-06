@@ -42,6 +42,7 @@ export interface Translations {
     email: string;
     linkedin: string;
     github: string;
+    whatsapp: string;
     response: string;
   };
   footer: { copyright: string; builtWith: string };
@@ -169,6 +170,7 @@ export const translations: Record<Locale, Translations> = {
       email: "Email",
       linkedin: "LinkedIn",
       github: "GitHub",
+      whatsapp: "WhatsApp",
       response: "Response within 24 hours",
     },
     footer: {
@@ -297,6 +299,7 @@ export const translations: Record<Locale, Translations> = {
       email: "Email",
       linkedin: "LinkedIn",
       github: "GitHub",
+      whatsapp: "WhatsApp",
       response: "Respuesta en menos de 24 horas",
     },
     footer: {
