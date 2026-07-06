@@ -1,6 +1,6 @@
 ---
 import { experience } from "../data/experience";
-import { getTechIcon, hexToRgba } from "../utils/icons";
+import { getTechIcon, getTechIconSrc, hexToRgba } from "../utils/icons";
 import { translations } from "../i18n/translations";
 
 const t = translations.en;
@@ -114,9 +114,17 @@ const t = translations.en;
                           const color = icon.color.length === 6 ? icon.color : "3b82f6";
                           return (
                             <span
-                              class="exp-tech-tag text-white/90"
-                              style={`background: ${hexToRgba(color, 0.1)}; border: 1px solid ${hexToRgba(color, 0.25)}`}
+                              class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium text-white"
+                              style={`background:${hexToRgba(color, 0.15)};border:1px solid ${hexToRgba(color, 0.25)}`}
                             >
+                              <img
+                                src={getTechIconSrc(tech, "brand")}
+                                alt=""
+                                width="16"
+                                height="16"
+                                class="h-4 w-4"
+                                loading="lazy"
+                              />
                               {tech}
                             </span>
                           );
