@@ -25,9 +25,17 @@ export interface Translations {
     title: string;
     subtitle: string;
     badge: string;
+    featuredBadge: string;
+    links: { demo: string; github: string; caseStudy: string };
     items: Record<
       string,
-      { name: string; subtitle: string; description: string; impact: string }
+      {
+        name: string;
+        subtitle: string;
+        description: string;
+        impact: string;
+        screenshots?: Record<string, string>;
+      }
     >;
   };
   experience: {
@@ -96,7 +104,25 @@ export const translations: Record<Locale, Translations> = {
       title: "Projects",
       subtitle: "Selected professional projects with real-world impact.",
       badge: "Professional Project",
+      featuredBadge: "Featured Case Study",
+      links: {
+        demo: "Live Demo",
+        github: "GitHub",
+        caseStudy: "Case Study",
+      },
       items: {
+        expensetrack: {
+          name: "ExpenseTrack",
+          subtitle: "Corporate Travel Expense Platform",
+          description:
+            "Full-stack expense management platform inspired by SAP Concur — one REST API powering web (Next.js), mobile (Flutter), and an admin panel. Employees submit expense reports, managers approve or reject them, and a real-time analytics dashboard tracks spending by category and status. Includes AI receipt scanning, 41 automated tests, and CI/CD across 3 repos.",
+          impact: "3 clients · 1 API · 41 tests",
+          screenshots: {
+            login: "ExpenseTrack login screen",
+            dashboard: "ExpenseTrack analytics dashboard",
+            admin: "ExpenseTrack admin panel",
+          },
+        },
         "magic-stars": {
           name: "Magic Stars",
           subtitle: "Logistics Platform",
@@ -225,7 +251,25 @@ export const translations: Record<Locale, Translations> = {
       title: "Proyectos",
       subtitle: "Proyectos profesionales seleccionados con impacto real.",
       badge: "Proyecto Profesional",
+      featuredBadge: "Case Study Destacado",
+      links: {
+        demo: "Demo en vivo",
+        github: "GitHub",
+        caseStudy: "Case Study",
+      },
       items: {
+        expensetrack: {
+          name: "ExpenseTrack",
+          subtitle: "Plataforma de Gastos Corporativos de Viaje",
+          description:
+            "Plataforma full-stack de gestión de gastos inspirada en SAP Concur — una API REST que alimenta web (Next.js), mobile (Flutter) y panel admin. Los empleados envían reportes de gastos, los managers los aprueban o rechazan, y un dashboard analítico en tiempo real muestra el gasto por categoría y estado. Incluye escaneo de recibos con IA, 41 tests automatizados y CI/CD en 3 repos.",
+          impact: "3 clientes · 1 API · 41 tests",
+          screenshots: {
+            login: "Pantalla de login de ExpenseTrack",
+            dashboard: "Dashboard analítico de ExpenseTrack",
+            admin: "Panel de administración de ExpenseTrack",
+          },
+        },
         "magic-stars": {
           name: "Magic Stars",
           subtitle: "Plataforma Logística",

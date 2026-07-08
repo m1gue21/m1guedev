@@ -32,13 +32,17 @@ export const stackItems: TechItem[] = [
   item("Astro", "frontend"),
   item("Alpine.js", "frontend"),
   item("Bootstrap", "frontend"),
+  item("Zustand", "frontend"),
   // Backend
   item("Node.js", "backend"),
   item("NestJS", "backend"),
+  item("Kotlin", "backend"),
+  item("Spring Boot", "backend"),
   item("Python", "backend"),
   item("PostgreSQL", "backend"),
   item("MongoDB", "backend"),
   item("Supabase", "backend"),
+  item("Swagger", "backend"),
   // Cloud & DevOps
   item("AWS", "cloud"),
   item("Azure", "cloud"),
@@ -52,7 +56,9 @@ export const stackItems: TechItem[] = [
   item("LangChain", "ai"),
   // Mobile
   item("Flutter", "mobile"),
+  item("Dart", "mobile"),
   // Tools
+  item("Jest", "tools"),
   item("GitHub", "tools"),
   item("Jira", "tools"),
   item("Figma", "tools"),

@@ -19,33 +19,43 @@ const t = translations.en;
       {
         projects.map((project, i) => {
           const data = t.projects.items[project.id];
+          const isFeatured = project.featured === true;
+
           return (
             <article
-              class="project-card glass-card reveal-item relative flex flex-col"
+              class:list={[
+                "project-card glass-card reveal-item relative flex flex-col",
+                isFeatured && "project-card-featured md:col-span-2",
+              ]}
               style={`transition-delay: ${i * 100}ms`}
             >
-              <!-- Accent bar -->
               <div class={`h-2 bg-gradient-to-r ${project.accentBar}`}></div>
 
               <div class="relative flex flex-1 flex-col p-6 pt-8">
-                <!-- Impact number top right -->
                 <p
-                  class="absolute right-5 top-5 max-w-[120px] text-right text-lg font-extrabold leading-tight text-gradient sm:text-xl"
+                  class:list={[
+                    "absolute right-5 top-5 text-right text-lg font-extrabold leading-tight text-gradient sm:text-xl",
+                    isFeatured ? "max-w-[180px]" : "max-w-[120px]",
+                  ]}
                   data-i18n={`projects.items.${project.id}.impact`}
                 >
                   {data.impact}
                 </p>
 
-                <!-- Badge -->
                 <span
-                  class="badge-text mb-4 inline-block w-fit rounded-full bg-secondary/15 px-3 py-1 text-secondary ring-1 ring-secondary/30"
-                  data-i18n="projects.badge"
+                  class:list={[
+                    "badge-text mb-4 inline-block w-fit rounded-full px-3 py-1 ring-1",
+                    isFeatured
+                      ? "bg-violet-500/15 text-violet-300 ring-violet-500/30"
+                      : "bg-secondary/15 text-secondary ring-secondary/30",
+                  ]}
+                  data-i18n={isFeatured ? "projects.featuredBadge" : "projects.badge"}
                 >
-                  {t.projects.badge}
+                  {isFeatured ? t.projects.featuredBadge : t.projects.badge}
                 </span>
 
                 <h3
-                  class="text-xl font-bold text-white"
+                  class="text-xl font-bold text-white md:text-2xl"
                   data-i18n={`projects.items.${project.id}.name`}
                 >
                   {data.name}
@@ -58,11 +68,79 @@ const t = translations.en;
                 </p>
 
                 <p
-                  class="project-desc mt-4 flex-1 text-sm text-muted"
+                  class:list={[
+                    "project-desc mt-4 flex-1 text-sm text-muted",
+                    isFeatured && "project-desc-featured",
+                  ]}
                   data-i18n={`projects.items.${project.id}.description`}
                 >
                   {data.description}
                 </p>
+
+                {
+                  project.screenshots && project.screenshots.length > 0 && (
+                    <div class="project-screenshots mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                      {project.screenshots.map((shot) => (
+                        <figure class="project-screenshot overflow-hidden rounded-xl border border-white/10">
+                          <img
+                            src={shot.src}
+                            alt={data.screenshots?.[shot.altKey] ?? ""}
+                            width="640"
+                            height="400"
+                            class="h-full w-full object-cover object-top"
+                            loading="lazy"
+                          />
+                        </figure>
+                      ))}
+                    </div>
+                  )
+                }
+
+                {
+                  project.links && (
+                    <div class="mt-5 flex flex-wrap gap-3">
+                      {
+                        project.links.demo && (
+                          <a
+                            href={project.links.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="project-link project-link-demo inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            <span data-i18n="projects.links.demo">{t.projects.links.demo}</span>
+                          </a>
+                        )
+                      }
+                      {
+                        project.links.github && (
+                          <a
+                            href={project.links.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="project-link project-link-github inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
+                          >
+                            <img src="https://cdn.simpleicons.org/github/ffffff" alt="" width="16" height="16" class="h-4 w-4" />
+                            <span data-i18n="projects.links.github">{t.projects.links.github}</span>
+                          </a>
+                        )
+                      }
+                      {
+                        project.links.caseStudy && (
+                          <a
+                            href={project.links.caseStudy}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="project-link project-link-case-study inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            <span data-i18n="projects.links.caseStudy">{t.projects.links.caseStudy}</span>
+                          </a>
+                        )
+                      }
+                    </div>
+                  )
+                }
 
                 <div class="mt-5 flex flex-wrap gap-2">
                   {project.stack.map((tech) => {

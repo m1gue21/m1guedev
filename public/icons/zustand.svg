@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+  <title>Zustand</title>
+  <g fill="#ffffff">
+    <circle cx="7" cy="7.5" r="3.2"/>
+    <circle cx="17" cy="7.5" r="3.2"/>
+    <path d="M12 22c-5.07 0-8.75-3.68-8.75-8.75C3.25 8.18 7.18 4.25 12 4.25s8.75 3.93 8.75 8.75S17.07 22 12 22z"/>
+  </g>
+  <circle cx="9.2" cy="12.8" r="1.2" fill="#0b1526"/>
+  <circle cx="14.8" cy="12.8" r="1.2" fill="#0b1526"/>
+  <ellipse cx="12" cy="16.2" rx="2.6" ry="2" fill="#0b1526"/>
+  <ellipse cx="12" cy="15.5" rx="0.9" ry="0.65" fill="#ffffff"/>
+</svg>

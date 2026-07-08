@@ -367,6 +367,59 @@ body {
   overflow: hidden;
 }
 
+.project-desc-featured {
+  -webkit-line-clamp: unset;
+  display: block;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.project-card-featured {
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+.project-card-featured:hover {
+  box-shadow: 0 24px 70px rgba(139, 92, 246, 0.18);
+}
+
+.project-screenshot {
+  aspect-ratio: 16 / 10;
+  background: rgba(255, 255, 255, 0.03);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.project-screenshot:hover {
+  transform: translateY(-2px);
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.project-link {
+  transition: var(--transition-smooth);
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-muted);
+}
+
+.project-link:hover {
+  color: #fff;
+  border-color: var(--color-border-hover);
+  transform: translateY(-1px);
+}
+
+.project-link-demo:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.project-link-github:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.project-link-case-study:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
 /* ─── Experience ─── */
 .experience-timeline-line {
   background: linear-gradient(
